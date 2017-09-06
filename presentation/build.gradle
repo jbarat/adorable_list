@@ -1,0 +1,53 @@
+apply plugin: 'com.android.application'
+apply plugin: "me.tatarka.retrolambda"
+
+android {
+    compileSdkVersion compileSdk
+    buildToolsVersion "$buildTool"
+
+    defaultConfig {
+        applicationId "jbarat.adorable"
+        minSdkVersion minSdk
+        targetSdkVersion targetSdk
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    compile project(':data')
+    compile project(':domain')
+
+    compile "io.reactivex.rxjava2:rxjava:$rxJava"
+    compile "io.reactivex.rxjava2:rxandroid:$rxAndroid"
+
+    compile "com.jakewharton.rxbinding2:rxbinding:$rxBinding"
+
+    compile "com.google.dagger:dagger:$dagger"
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
+
+    compile "com.squareup.picasso:picasso:$picasso"
+
+    compile "com.android.support:appcompat-v7:$supportLibrary"
+    compile "com.android.support:recyclerview-v7:$supportLibrary"
+    compile "com.android.support.constraint:constraint-layout:$constraintLayout"
+
+    testCompile "junit:junit:$junit"
+    testCompile "org.mockito:mockito-core:$mockitoCore"
+    testCompile "org.assertj:assertj-core:$assertjCore"
+
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+}
