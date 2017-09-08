@@ -18,4 +18,6 @@ public interface ApplicationComponent {
     Context context();
 
     MainComponent mainComponent();
+
+    DetailsComponent detailsComponent();
 }

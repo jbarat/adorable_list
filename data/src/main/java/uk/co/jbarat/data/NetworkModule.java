@@ -1,7 +1,5 @@
 package uk.co.jbarat.data;
 
-import android.content.Context;
-
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Named;
@@ -14,11 +12,13 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import uk.co.jbarat.data.comment.CommentRepository;
 import uk.co.jbarat.data.comment.CommentWebService;
 import uk.co.jbarat.data.post.PostRepository;
 import uk.co.jbarat.data.post.PostWebService;
 import uk.co.jbarat.data.user.UserRepository;
 import uk.co.jbarat.data.user.UserWebService;
+import uk.co.jbarat.domain.comment.CommentUseCase;
 import uk.co.jbarat.domain.post.PostUseCase;
 import uk.co.jbarat.domain.user.UserUseCase;
 
@@ -51,6 +51,11 @@ public class NetworkModule {
     }
 
     @Provides
+    CommentUseCase.CommentDataSource commentDataSource(CommentRepository commentRepository) {
+        return commentRepository;
+    }
+
+    @Provides
     @Singleton
     Retrofit retrofit(OkHttpClient secureClient) {
         return new Retrofit.Builder()
@@ -76,6 +81,6 @@ public class NetworkModule {
     @Provides
     HttpLoggingInterceptor httpLoggingInterceptor(@Named("debug") Boolean debug) {
         return new HttpLoggingInterceptor()
-                .setLevel(debug ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
+                .setLevel(debug ? HttpLoggingInterceptor.Level.BASIC : HttpLoggingInterceptor.Level.NONE);
     }
 }

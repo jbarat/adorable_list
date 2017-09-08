@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Single;
 import retrofit2.adapter.rxjava2.Result;
+import uk.co.jbarat.data.user.response.UserResponse;
 import uk.co.jbarat.domain.logger.Logger;
 import uk.co.jbarat.domain.user.User;
 import uk.co.jbarat.domain.user.UserUseCase;

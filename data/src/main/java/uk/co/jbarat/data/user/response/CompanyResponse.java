@@ -1,4 +1,4 @@
-package uk.co.jbarat.data.user;
+package uk.co.jbarat.data.user.response;
 
 import com.google.gson.annotations.SerializedName;
 

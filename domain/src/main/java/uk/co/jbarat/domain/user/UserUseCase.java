@@ -9,7 +9,9 @@ import javax.inject.Named;
 
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
+import uk.co.jbarat.domain.scope.Activity;
 
+@Activity
 public class UserUseCase {
 
     private final Scheduler scheduler;

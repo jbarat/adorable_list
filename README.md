@@ -12,4 +12,5 @@ This app is a simple demo app of list and details.
 * Uses dagger to wire the dependencies
 * Uses RxJava for handling data flow
 
-### Notes ### 
+### Things to improve ### 
+* The Repositories look very similar they should be unified

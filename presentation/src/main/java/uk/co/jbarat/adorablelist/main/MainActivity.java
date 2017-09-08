@@ -1,10 +1,14 @@
 package uk.co.jbarat.adorablelist.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Button;
 import android.widget.ProgressBar;
+
+import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.List;
 
@@ -12,6 +16,7 @@ import javax.inject.Inject;
 
 import uk.co.jbarat.adorablelist.R;
 import uk.co.jbarat.adorablelist.application.AdorableListApplication;
+import uk.co.jbarat.adorablelist.detail.DetailsActivity;
 import uk.co.jbarat.adorablelist.di.MainComponent;
 
 import static android.view.View.GONE;
@@ -26,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     private ProgressBar progressBar;
     private RecyclerView postListRecyclerView;
+    private Button retryButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,17 +40,14 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
         component().inject(this);
 
-        postListRecyclerView = (RecyclerView) findViewById(R.id.main_posts);
-        progressBar = (ProgressBar) findViewById(R.id.main_progress);
-
-        progressBar.setVisibility(VISIBLE);
+        postListRecyclerView = (RecyclerView) findViewById(R.id.posts);
+        progressBar = (ProgressBar) findViewById(R.id.progress);
+        retryButton = (Button) findViewById(R.id.retry);
 
         postListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         postListRecyclerView.setAdapter(postListAdapter);
-        postListRecyclerView.setVisibility(GONE);
 
-
-        mainPresenter.attach(this);
+        mainPresenter.attach(this, postListAdapter.getSelection(), RxView.clicks(retryButton));
     }
 
     @Override
@@ -70,15 +73,20 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @Override
-    public void updatePostsList(List<PostViewModel> posts) {
-        if (posts.size() > 0) {
-            progressBar.setVisibility(GONE);
-            postListRecyclerView.setVisibility(VISIBLE);
+    public void updatePostsList(List<PostListViewModel> posts) {
+        progressBar.setVisibility(GONE);
 
+        if (posts.size() > 0) {
+            postListRecyclerView.setVisibility(VISIBLE);
             postListAdapter.updateList(posts);
-        } else {
-            progressBar.setVisibility(VISIBLE);
-            postListRecyclerView.setVisibility(GONE);
+        }else{
+            retryButton.setVisibility(VISIBLE);
         }
+    }
+
+    @Override
+    public void startPostDetailsActivity(int postId) {
+        Intent intent = DetailsActivity.getStaringIntent(this, postId);
+        startActivity(intent);
     }
 }

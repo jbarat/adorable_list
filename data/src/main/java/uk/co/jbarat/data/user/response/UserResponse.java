@@ -1,8 +1,8 @@
-package uk.co.jbarat.data.user;
+package uk.co.jbarat.data.user.response;
 
 import com.google.gson.annotations.SerializedName;
 
-class UserResponse {
+public class UserResponse {
     private int id;
     private String name;
     @SerializedName("username")

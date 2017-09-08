@@ -1,5 +1,6 @@
 package uk.co.jbarat.data.post;
 
+import java.io.IOError;
 import java.util.ArrayList;
 import java.util.List;
 

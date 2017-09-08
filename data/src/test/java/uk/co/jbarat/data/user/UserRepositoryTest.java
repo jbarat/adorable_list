@@ -15,6 +15,7 @@ import io.reactivex.observers.TestObserver;
 import retrofit2.Response;
 import retrofit2.adapter.rxjava2.Result;
 import uk.co.jbarat.data.NoContentResponseBody;
+import uk.co.jbarat.data.user.response.UserResponse;
 import uk.co.jbarat.domain.logger.Logger;
 import uk.co.jbarat.domain.user.User;
 
