@@ -13,6 +13,10 @@ import uk.co.jbarat.domain.logger.Logger;
 
 import static uk.co.jbarat.data.NetworkConstants.LOG_HTTP_CODE;
 
+/**
+ * Simple retrofit web service implementation. If there is a problem with the call it will return an
+ * empty list.
+ */
 public class CommentRepository implements CommentUseCase.CommentDataSource {
     private final CommentWebService commentWebService;
     private final Logger logger;

@@ -37,7 +37,7 @@ class DetailsPresenter {
         compositeDisposable = new CompositeDisposable();
 
         compositeDisposable.add(postUseCase.getPost(postId)
-                .flatMapSingle(this::collectDetails)
+                .flatMap(this::collectDetails)
                 .observeOn(scheduler)
                 .subscribe(this::updateView));
     }
@@ -47,16 +47,16 @@ class DetailsPresenter {
         compositeDisposable.dispose();
     }
 
-    private Single<PostDetailViewModel> collectDetails(Post post) {
+    private Single<DetailViewModel> collectDetails(Post post) {
         return Single.zip(userUseCase.getUser(post.getUserId()),
                 commentUseCase.getNumberOfCommentOfPost(post.getId()),
-                (user, comments) -> new PostDetailViewModel(post.getTitle(), post.getBody(),
+                (user, comments) -> new DetailViewModel(post.getTitle(), post.getBody(),
                         user.getName(), user.getEmail(), comments));
     }
 
-    private void updateView(PostDetailViewModel postDetailViewModel) {
+    private void updateView(DetailViewModel detailViewModel) {
         if (detailsView != null) {
-            detailsView.updateDetails(postDetailViewModel);
+            detailsView.updateDetails(detailViewModel);
         }
     }
 }

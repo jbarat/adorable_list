@@ -1,6 +1,6 @@
 package uk.co.jbarat.adorablelist.detail;
 
-class PostDetailViewModel {
+class DetailViewModel {
 
     private final String title;
     private final String body;
@@ -8,7 +8,7 @@ class PostDetailViewModel {
     private final String email;
     private final int comments;
 
-    PostDetailViewModel(String title, String body, String name, String email, int comments) {
+    DetailViewModel(String title, String body, String name, String email, int comments) {
         this.title = title;
         this.body = body;
         this.name = name;

@@ -7,6 +7,9 @@ import javax.inject.Inject;
 import io.reactivex.Single;
 import uk.co.jbarat.domain.scope.Activity;
 
+/**
+ * UseCase to get the number of comments.
+ */
 @Activity
 public class CommentUseCase {
 

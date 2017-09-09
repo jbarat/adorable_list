@@ -85,13 +85,13 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     }
 
     @Override
-    public void updateDetails(PostDetailViewModel postDetailViewModel) {
-        title.setText(postDetailViewModel.getTitle());
-        body.setText(postDetailViewModel.getBody());
-        author.setText(postDetailViewModel.getName());
-        comments.setText(String.valueOf(postDetailViewModel.getComments()));
+    public void updateDetails(DetailViewModel detailViewModel) {
+        title.setText(detailViewModel.getTitle());
+        body.setText(detailViewModel.getBody());
+        author.setText(detailViewModel.getName());
+        comments.setText(String.valueOf(detailViewModel.getComments()));
 
-        picasso.load(NetworkConstants.CUTE_AVATAR_URL + postDetailViewModel.getEmail())
+        picasso.load(NetworkConstants.ADORABLE_AVATAR_URL + detailViewModel.getEmail())
                 .placeholder(R.drawable.placeholder).into(image);
 
         showViews();

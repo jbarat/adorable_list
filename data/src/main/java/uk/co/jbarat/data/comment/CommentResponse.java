@@ -1,13 +1,13 @@
 package uk.co.jbarat.data.comment;
 
-public class CommentResponse {
+class CommentResponse {
     private int id;
     private int postId;
     private String name;
     private String email;
     private String body;
 
-    public  CommentResponse(int id, int postId, String name, String email, String body) {
+    CommentResponse(int id, int postId, String name, String email, String body) {
         this.id = id;
         this.postId = postId;
         this.name = name;

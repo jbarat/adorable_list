@@ -1,12 +1,10 @@
 package uk.co.jbarat.data.post;
 
-import java.io.IOError;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import retrofit2.adapter.rxjava2.Result;
 import uk.co.jbarat.domain.logger.Logger;
@@ -15,6 +13,10 @@ import uk.co.jbarat.domain.post.PostUseCase;
 
 import static uk.co.jbarat.data.NetworkConstants.LOG_HTTP_CODE;
 
+/**
+ * Simple retrofit web service implementation. If there is a problem with the call it will return an
+ * empty list.
+ */
 public class PostRepository implements PostUseCase.PostDataSource {
 
     private final PostWebService postWebService;

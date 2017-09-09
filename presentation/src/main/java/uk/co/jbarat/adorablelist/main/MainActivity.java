@@ -73,13 +73,14 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @Override
-    public void updatePostsList(List<PostListViewModel> posts) {
+    public void updatePostsList(List<ListViewModel> posts) {
         progressBar.setVisibility(GONE);
 
         if (posts.size() > 0) {
             postListRecyclerView.setVisibility(VISIBLE);
+            retryButton.setVisibility(GONE);
             postListAdapter.updateList(posts);
-        }else{
+        } else {
             retryButton.setVisibility(VISIBLE);
         }
     }

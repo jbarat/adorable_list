@@ -1,5 +1,6 @@
 package uk.co.jbarat.domain.user;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
+import uk.co.jbarat.domain.post.PostUseCase;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.times;
@@ -28,6 +30,8 @@ public class UserUseCaseTest {
 
     @Mock private UserUseCase.UserDataSource userDataSource;
 
+    private int counter;
+
     @Test
     public void shouldGetCorrectUser_whenIdRequested() {
         UserUseCase userUseCase = givenAUserUseCase();
@@ -39,13 +43,20 @@ public class UserUseCaseTest {
 
     @Test
     public void shouldNotCallDataSourceMoreThenOnce_whenCalledMultipleTimes() {
-        UserUseCase userUseCase = givenAUserUseCase();
+        UserUseCase userUseCase = givenAUserUseCaseWithACounter();
 
         userUseCase.getUser(USER_2.getId()).blockingGet();
         userUseCase.getUser(USER_2.getId()).blockingGet();
         userUseCase.getUser(USER_2.getId()).blockingGet();
 
-        verify(userDataSource, times(1)).getAllUsers();
+        Assertions.assertThat(counter).isEqualTo(1);
+    }
+
+    private UserUseCase givenAUserUseCaseWithACounter() {
+        counter = 0;
+        when(userDataSource.getAllUsers()).thenReturn(Single.just(USER_LIST).doOnSuccess(posts -> counter++));
+
+        return new UserUseCase(userDataSource, Schedulers.trampoline());
     }
 
     private UserUseCase givenAUserUseCase() {

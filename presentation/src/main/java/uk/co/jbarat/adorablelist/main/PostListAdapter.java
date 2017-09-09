@@ -21,9 +21,9 @@ import static java.util.Collections.emptyList;
 class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.ViewHolder> {
 
     private final Picasso picasso;
-    private final BehaviorSubject<PostListViewModel> selectedItem = BehaviorSubject.create();
+    private final BehaviorSubject<ListViewModel> selectedItem = BehaviorSubject.create();
 
-    private List<PostListViewModel> posts = emptyList();
+    private List<ListViewModel> posts = emptyList();
 
     PostListAdapter(Picasso picasso) {
         this.picasso = picasso;
@@ -46,17 +46,17 @@ class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.ViewHolder> {
         return posts.size();
     }
 
-    void updateList(List<PostListViewModel> posts) {
+    void updateList(List<ListViewModel> posts) {
         this.posts = posts;
 
         notifyDataSetChanged();
     }
 
-    Observable<PostListViewModel> getSelection() {
+    Observable<ListViewModel> getSelection() {
         return selectedItem;
     }
 
-    private void emitSelect(PostListViewModel item) {
+    private void emitSelect(ListViewModel item) {
         selectedItem.onNext(item);
     }
 
@@ -67,7 +67,7 @@ class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.ViewHolder> {
         final TextView title;
         final ImageView image;
 
-        PostListViewModel item;
+        ListViewModel item;
 
         ViewHolder(View view, Picasso picasso, PostListAdapter postListAdapter) {
             super(view);
@@ -86,12 +86,12 @@ class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.ViewHolder> {
             parent.emitSelect(item);
         }
 
-        void bind(PostListViewModel postListViewModel) {
-            item = postListViewModel;
+        void bind(ListViewModel listViewModel) {
+            item = listViewModel;
 
             title.setText(item.getTitle());
 
-            picasso.load(NetworkConstants.CUTE_AVATAR_URL + postListViewModel.getUserEmail())
+            picasso.load(NetworkConstants.ADORABLE_AVATAR_URL + listViewModel.getUserEmail())
                     .placeholder(R.drawable.placeholder).into(image);
         }
     }

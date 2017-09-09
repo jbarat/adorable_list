@@ -14,6 +14,10 @@ import uk.co.jbarat.domain.user.UserUseCase;
 
 import static uk.co.jbarat.data.NetworkConstants.LOG_HTTP_CODE;
 
+/**
+ * Simple retrofit web service implementation. If there is a problem with the call it will return an
+ * empty list.
+ */
 public class UserRepository implements UserUseCase.UserDataSource {
 
     private final UserWebService userWebService;

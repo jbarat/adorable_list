@@ -19,7 +19,8 @@ import static java.util.Collections.emptyList;
 @Activity
 class MainPresenter {
 
-    private static final List<PostListViewModel> EMPTY_RESULT = emptyList();
+    private static final List<ListViewModel> EMPTY_RESULT = emptyList();
+
     private final PostUseCase postUseCase;
     private final UserUseCase userUseCase;
     private final Scheduler scheduler;
@@ -34,7 +35,7 @@ class MainPresenter {
         this.scheduler = scheduler;
     }
 
-    void attach(MainView mainView, Observable<PostListViewModel> postSelection, Observable<Object> retryClicks) {
+    void attach(MainView mainView, Observable<ListViewModel> postSelection, Observable<Object> retryClicks) {
         this.mainView = mainView;
 
         compositeDisposable = new CompositeDisposable();
@@ -42,11 +43,11 @@ class MainPresenter {
         compositeDisposable.add(Observable.merge(Observable.just(new Object()), retryClicks)
                 .flatMap(ignored -> postUseCase.getAllPosts().toObservable())
                 .flatMap(this::getUserDetails)
-                .observeOn(scheduler)
+                .observeOn(scheduler) // jump to the main thread before ui update
                 .subscribe(this::updateList));
 
         compositeDisposable.add(postSelection
-                .map(PostListViewModel::getId)
+                .map(ListViewModel::getId)
                 .subscribe(this::startDetailsActivity));
     }
 
@@ -59,13 +60,13 @@ class MainPresenter {
         mainView.startPostDetailsActivity(postId);
     }
 
-    private void updateList(List<PostListViewModel> posts) {
+    private void updateList(List<ListViewModel> posts) {
         if (mainView != null) {
             mainView.updatePostsList(posts);
         }
     }
 
-    private ObservableSource<List<PostListViewModel>> getUserDetails(List<Post> posts) {
+    private ObservableSource<List<ListViewModel>> getUserDetails(List<Post> posts) {
         if (posts.isEmpty()) {
             return Observable.just(EMPTY_RESULT);
         } else {
@@ -73,9 +74,9 @@ class MainPresenter {
                     .flatMapIterable(post -> post)
                     .flatMap(post -> userUseCase.getUser(post.getUserId())
                             .flatMapObservable(user -> Observable.just(user.getEmail()))
-                            .map(userEmail -> new PostListViewModel(post.getId(),
-                                    post.getBody(), post.getTitle(), userEmail)))
-                    .toList().toObservable();
+                            .map(userEmail -> new ListViewModel(post.getId(), post.getTitle(), userEmail)))
+                    .toSortedList()
+                    .toObservable();
         }
     }
 
