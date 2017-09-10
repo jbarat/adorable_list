@@ -13,15 +13,20 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.PublishSubject;
 import uk.co.jbarat.adorablelist.R;
 import uk.co.jbarat.data.NetworkConstants;
 
 import static java.util.Collections.emptyList;
 
+/**
+ * Simple adapter to show the posts.
+ * It can be subscribed to receive the item selection events
+ */
 class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.ViewHolder> {
 
     private final Picasso picasso;
-    private final BehaviorSubject<ListViewModel> selectedItem = BehaviorSubject.create();
+    private final PublishSubject<ListViewModel> selectedItem = PublishSubject.create();
 
     private List<ListViewModel> posts = emptyList();
 

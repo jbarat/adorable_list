@@ -1,7 +1,5 @@
 package uk.co.jbarat.adorablelist.di;
 
-import android.content.Context;
-
 import javax.inject.Singleton;
 
 import dagger.Component;

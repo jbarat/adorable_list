@@ -68,6 +68,10 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
         presenter.deAttach();
     }
 
+    /**
+     * Retaining the component to achieve activity scope.
+     * @return
+     */
     @Override
     public Object onRetainCustomNonConfigurationInstance() {
         return component();

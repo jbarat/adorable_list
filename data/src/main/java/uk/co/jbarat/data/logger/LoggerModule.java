@@ -5,7 +5,7 @@ import dagger.Provides;
 import uk.co.jbarat.domain.logger.Logger;
 
 @Module
-class LoggerModule {
+public class LoggerModule {
 
     @Provides
     Logger logger(DebugLogger debugLogger) {

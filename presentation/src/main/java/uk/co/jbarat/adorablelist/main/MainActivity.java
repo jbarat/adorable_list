@@ -90,4 +90,12 @@ public class MainActivity extends AppCompatActivity implements MainView {
         Intent intent = DetailsActivity.getStaringIntent(this, postId);
         startActivity(intent);
     }
+
+    @Override
+    public void setToProgress() {
+        progressBar.setVisibility(VISIBLE);
+        retryButton.setVisibility(GONE);
+        postListRecyclerView.setVisibility(GONE);
+
+    }
 }

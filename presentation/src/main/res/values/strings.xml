@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AdorableList</string>
-    <string name="details.comments">Number of comments</string>
+    <string name="app.name">AdorableList</string>
     <string name="main.retry">Retry</string>
+    <string name="details.comments">Number of comments</string>
 </resources>

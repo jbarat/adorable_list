@@ -40,12 +40,15 @@ class MainPresenter {
 
         compositeDisposable = new CompositeDisposable();
 
+        //This stream starts as soon it is subscribed and when the retry button clicked
         compositeDisposable.add(Observable.merge(Observable.just(new Object()), retryClicks)
+                .doOnNext(o -> mainView.setToProgress())
                 .flatMap(ignored -> postUseCase.getAllPosts().toObservable())
                 .flatMap(this::getUserDetails)
                 .observeOn(scheduler) // jump to the main thread before ui update
                 .subscribe(this::updateList));
 
+        // Starts the details activity when item selected
         compositeDisposable.add(postSelection
                 .map(ListViewModel::getId)
                 .subscribe(this::startDetailsActivity));
@@ -71,11 +74,11 @@ class MainPresenter {
             return Observable.just(EMPTY_RESULT);
         } else {
             return Observable.just(posts)
-                    .flatMapIterable(post -> post)
+                    .flatMapIterable(post -> post) // Explode the list to individual items to make processing easier
                     .flatMap(post -> userUseCase.getUser(post.getUserId())
                             .flatMapObservable(user -> Observable.just(user.getEmail()))
                             .map(userEmail -> new ListViewModel(post.getId(), post.getTitle(), userEmail)))
-                    .toSortedList()
+                    .toSortedList()// Collect the list items into one list
                     .toObservable();
         }
     }

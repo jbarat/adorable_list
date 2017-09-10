@@ -12,6 +12,9 @@ import uk.co.jbarat.domain.post.PostUseCase;
 import uk.co.jbarat.domain.scope.Activity;
 import uk.co.jbarat.domain.user.UserUseCase;
 
+/**
+ * Activity scoped presenter to load the data for the the view.
+ */
 @Activity
 class DetailsPresenter {
 
@@ -47,6 +50,9 @@ class DetailsPresenter {
         compositeDisposable.dispose();
     }
 
+    /**
+     * Wait for all the data to arrive then zip them together and create the view model.
+     */
     private Single<DetailViewModel> collectDetails(Post post) {
         return Single.zip(userUseCase.getUser(post.getUserId()),
                 commentUseCase.getNumberOfCommentOfPost(post.getId()),
